@@ -1,7 +1,12 @@
 package a;
 
+
+import com.googlecode.javacv.cpp.opencv_core;
+import static com.googlecode.javacv.cpp.opencv_highgui.*;
 import java.awt.BorderLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +19,7 @@ import javax.swing.UIManager;
 public class Controls {
 
     //Variables
+    Frame frame = new Frame();
     JPanel window = new JPanel();
     JButton cap;
     Rectangle rcap;
@@ -22,6 +28,7 @@ public class Controls {
     public static JFrame f = new JFrame();
     protected int fpsselection = 1;
     Toolbar toolbar = new Toolbar();
+    private int framename = 0;
 
     //handles the JFrame
     public Controls() {
@@ -36,7 +43,7 @@ public class Controls {
             e.printStackTrace();
         }
         f.getContentPane().add(window);
-        f.setTitle("00002-A");
+        f.setTitle("SnapShot-002-B");
         f.setSize(width, height);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocationRelativeTo(null);
@@ -54,6 +61,21 @@ public class Controls {
         rcap = new Rectangle((width / 2) - 40, 80, 80, 25);
         cap.setBounds(rcap);
         window.add(cap);
+
+        cap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    opencv_core.IplImage img = frame.Frame();
+                    if (img != null) {
+                        cvSaveImage("images/image_" + framename + ".jpg", img);
+                        System.out.println("Frame Captured...");
+                        framename++;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public static void main(String args[]) {

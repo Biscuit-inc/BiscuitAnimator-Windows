@@ -7,17 +7,16 @@ public class Camera implements Runnable {
 
     public Camera() {
         CanvasFrame canvas = new CanvasFrame("Cam");
-    canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    Frame frame = new Frame();
-    while(true){
-        try {
-            IplImage img = frame.Frame();
-            canvas.showImage(img);
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        Frame frame = new Frame();
+        while (true) {
+            try {
+                IplImage img = frame.Frame();
+                canvas.showImage(img);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-    }
     }
 
     @Override
