@@ -1,6 +1,5 @@
 package a;
 
-
 import com.googlecode.javacv.cpp.opencv_core;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
 import java.awt.BorderLayout;
@@ -25,12 +24,11 @@ public class Controls {
     Rectangle rcap;
     private int width = 210;
     private int height = 280;
-    public static JFrame f = new JFrame();
-    protected int fpsselection = 1;
+    public static final JFrame f = new JFrame();
     Toolbar toolbar = new Toolbar();
     private int framename = 0;
 
-    //handles the JFrame
+    //handles the JFrame and Main Content
     public Controls() {
 
         window.add(toolbar.toolBar, BorderLayout.NORTH);
@@ -65,12 +63,14 @@ public class Controls {
         cap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    opencv_core.IplImage img = frame.Frame();
+                    opencv_core.IplImage img = frame.frame();
                     if (img != null) {
                         cvSaveImage("images/image_" + framename + ".jpg", img);
                         System.out.println("Frame Captured...");
                         framename++;
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

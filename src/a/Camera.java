@@ -5,14 +5,17 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 public class Camera implements Runnable {
 
+    public static final CanvasFrame canvas = new CanvasFrame("Cam");
+
     public Camera() {
-        CanvasFrame canvas = new CanvasFrame("Cam");
         canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         Frame frame = new Frame();
         while (true) {
             try {
-                IplImage img = frame.Frame();
+                IplImage img = frame.frame();
                 canvas.showImage(img);
+            } catch (RuntimeException e) {
+                throw e;
             } catch (Exception e) {
                 e.printStackTrace();
             }

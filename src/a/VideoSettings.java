@@ -18,6 +18,8 @@ import javax.swing.UIManager;
  *
  * @author Christopher Williams
  */
+
+//Not Functional Yet
 public class VideoSettings extends JFrame {
 
     private JLabel lfps;
@@ -27,12 +29,12 @@ public class VideoSettings extends JFrame {
     private int height = 480;
     private Choice fps = new Choice();
     private Rectangle rok, rfps;
-    Controls con = new Controls();
+//    Controls con = new Controls();
     Configure config = new Configure();
 
     public VideoSettings() {
         try {
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -40,7 +42,7 @@ public class VideoSettings extends JFrame {
         }
         setUndecorated(false);
         getContentPane().add(settings);
-        setTitle("Master Shot: Settings");
+        setTitle("Settings");
         setSize(width, height);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -92,7 +94,6 @@ public class VideoSettings extends JFrame {
                 }
 
                 config.saveConfig("fps", f);
-                con.fpsselection = fps.getSelectedIndex();
                 dispose();
             }
         });

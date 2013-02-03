@@ -7,7 +7,6 @@ package a;
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core;
 
-
 /**
  *
  * @author Christopher Williams
@@ -17,13 +16,15 @@ public class Frame {
 
     final OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
 
-    public opencv_core.IplImage Frame() {
+    public opencv_core.IplImage frame() {
         try {
             grabber.start();
             opencv_core.IplImage img = grabber.grab();
             if (img != null) {
                 return img;
             }
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             e.printStackTrace();
         }

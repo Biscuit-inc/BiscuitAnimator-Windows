@@ -246,7 +246,7 @@ public class Toolbar {
 
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-             //   Camera.canvas.dispose();
+                Camera.canvas.dispose();
                 Controls.f.dispose();
             }
         });
@@ -255,6 +255,7 @@ public class Toolbar {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     Runtime runtime = Runtime.getRuntime();
+                    //need to build a photo editor 
                     runtime.exec("");
                 } catch (IOException i) {
                     i.printStackTrace();
