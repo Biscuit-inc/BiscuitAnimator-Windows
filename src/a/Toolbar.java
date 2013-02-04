@@ -31,6 +31,7 @@ public class Toolbar {
     JMenuItem cam = new JMenuItem("Camera Settings");
     //File
     JMenuItem save = new JMenuItem("Save");
+    JMenuItem saveas = new JMenuItem("Save As");
     JMenuItem exit = new JMenuItem("exit");
     JMenuItem export = new JMenuItem("Export");
     //Tools
@@ -157,6 +158,7 @@ public class Toolbar {
     private void createAndShowMenu(final JComponent component, final AbstractButton moreButton) {
         JPopupMenu menu = new JPopupMenu();
         menu.add(save);
+        menu.add(saveas);
         menu.add(export);
         menu.add(exit);
 
@@ -238,6 +240,12 @@ public class Toolbar {
             }
         });
 
+        saveas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionevent) {
+                Save_as save_as = new Save_as();
+            }
+        });
+
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 //add TODO code
@@ -255,7 +263,7 @@ public class Toolbar {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     Runtime runtime = Runtime.getRuntime();
-                    //need to build a photo editor 
+                    //need to build a photo editor
                     runtime.exec("");
                 } catch (IOException i) {
                     i.printStackTrace();

@@ -22,7 +22,7 @@ public class Controls {
     JPanel window = new JPanel();
     JButton cap;
     Rectangle rcap;
-    private int width = 210;
+    private int width = 320;
     private int height = 280;
     public static final JFrame f = new JFrame();
     Toolbar toolbar = new Toolbar();
@@ -41,7 +41,7 @@ public class Controls {
             e.printStackTrace();
         }
         f.getContentPane().add(window);
-        f.setTitle("SnapShot-002-B");
+        f.setTitle("Pre-Alpha-002-A - ");
         f.setSize(width, height);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocationRelativeTo(null);
@@ -56,7 +56,7 @@ public class Controls {
     //Draws the buttons and adds functions to them
     private void drawButtons() {
         cap = new JButton("Capture");
-        rcap = new Rectangle((width / 2) - 40, 80, 80, 25);
+        rcap = new Rectangle((width / 2) - 50, 80, 80, 25);
         cap.setBounds(rcap);
         window.add(cap);
 
@@ -65,8 +65,8 @@ public class Controls {
                 try {
                     opencv_core.IplImage img = frame.frame();
                     if (img != null) {
-                        cvSaveImage("images/image_" + framename + ".jpg", img);
-                        System.out.println("Frame Captured...");
+                        cvSaveImage(Save_Algorithm.imgdir + "\\image_" + framename + ".jpg", img);
+                        System.out.println("Frame Captured at... " + Save_as.pathname);
                         framename++;
                     }
                 } catch (RuntimeException e) {
