@@ -31,7 +31,7 @@ public class Toolbar {
     JMenuItem cam = new JMenuItem("Camera Settings");
     //File
     JMenuItem save = new JMenuItem("Save");
-    JMenuItem saveas = new JMenuItem("Save As");
+    JMenuItem saveas = new JMenuItem("Project Path");
     JMenuItem exit = new JMenuItem("exit");
     JMenuItem export = new JMenuItem("Export");
     //Tools

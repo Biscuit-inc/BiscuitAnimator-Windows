@@ -20,6 +20,9 @@ public class Frame {
         try {
             grabber.start();
             opencv_core.IplImage img = grabber.grab();
+           // grabber.setBitsPerPixel(32);
+            //grabber.setImageHeight(480);
+            //grabber.setImageWidth(320);
             if (img != null) {
                 return img;
             }

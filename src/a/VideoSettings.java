@@ -29,7 +29,6 @@ public class VideoSettings extends JFrame {
     private int height = 480;
     private Choice fps = new Choice();
     private Rectangle rok, rfps;
-//    Controls con = new Controls();
     Configure config = new Configure();
 
     public VideoSettings() {

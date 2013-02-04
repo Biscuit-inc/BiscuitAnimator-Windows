@@ -31,8 +31,7 @@ public class Controls {
     //handles the JFrame and Main Content
     public Controls() {
 
-        window.add(toolbar.toolBar, BorderLayout.NORTH);
-
+        window.add(toolbar.toolBar, BorderLayout.WEST);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (RuntimeException e) {

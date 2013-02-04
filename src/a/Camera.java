@@ -5,13 +5,16 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 public class Camera implements Runnable {
 
+    Frame frame = new Frame();
     public static final CanvasFrame canvas = new CanvasFrame("Cam");
+    IplImage imgcheck = frame.frame();
 
     public Camera() {
         canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        Frame frame = new Frame();
+        error_Check();
         while (true) {
             try {
+                System.setProperty("sun.java2d.opengl", "True");
                 IplImage img = frame.frame();
                 canvas.showImage(img);
             } catch (RuntimeException e) {
@@ -19,6 +22,12 @@ public class Camera implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void error_Check() {
+        if (imgcheck == null) {
+            NoCam_Error noCam_Error = new NoCam_Error();
         }
     }
 
