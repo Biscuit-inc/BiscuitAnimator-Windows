@@ -20,9 +20,10 @@ public class Controls {
     //Variables
     Frame frame = new Frame();
     JPanel window = new JPanel();
+    JPanel win = new JPanel();
     JButton cap;
     Rectangle rcap;
-    private int width = 320;
+    private int width = 240;
     private int height = 280;
     public static final JFrame f = new JFrame();
     Toolbar toolbar = new Toolbar();
