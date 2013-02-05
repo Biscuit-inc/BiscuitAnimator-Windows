@@ -5,6 +5,7 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
+//Shows image but not pratical 
 public class Camera extends JPanel implements Runnable {
 
     Frame frame = new Frame();

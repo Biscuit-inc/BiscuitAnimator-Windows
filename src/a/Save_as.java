@@ -18,12 +18,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ *
+ * @author Christopher Williams
+ */
 public class Save_as extends JFrame {
 
     private JTextField filename = new JTextField(), dir = new JTextField();
     private JButton open = new JButton("Open"), save = new JButton("Save");
     JFileChooser c = new JFileChooser();
     public static String pathname;
+    private String lastframenum = "Last Captured Picture";
     private int width = 300;
     private int height = 130;
 
@@ -51,10 +56,12 @@ public class Save_as extends JFrame {
 
     private void openL() {
 
+        //Saves path and creates folder
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ab) {
                 try {
                     Save_Algorithm savealg = new Save_Algorithm();
+                    savealg.projectFile(lastframenum, WIDTH);
                 } catch (RuntimeException e) {
                     throw e;
                 } catch (IOException ex) {
@@ -64,6 +71,7 @@ public class Save_as extends JFrame {
             }
         });
 
+        //JFileChooser opener
         open.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 int rVal = c.showOpenDialog(Save_as.this);

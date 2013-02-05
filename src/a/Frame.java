@@ -11,10 +11,10 @@ import com.googlecode.javacv.cpp.opencv_core;
  *
  * @author Christopher Williams
  */
-//Not working at all
+//Gets image from camera
 public class Frame {
 
-    final OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
+    final OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0); //0 for first camera 1 for next etc.
 
     public opencv_core.IplImage frame() {
         try {

@@ -4,6 +4,7 @@
  */
 package a;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -47,6 +48,7 @@ public class Toolbar {
         toolBar.add(createPrograms());
         toolBar.add(createSettings());
         toolBar.add(createHelp());
+        toolBar.setFloatable(false);
 
         actionMethod();
     }
