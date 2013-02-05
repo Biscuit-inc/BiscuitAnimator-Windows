@@ -28,7 +28,7 @@ public class Save_as extends JFrame {
     private int height = 130;
 
     public Save_as() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(width, height);
         setLocationRelativeTo(null);
         setVisible(true);

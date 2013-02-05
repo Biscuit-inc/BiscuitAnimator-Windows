@@ -6,8 +6,10 @@ import java.awt.BorderLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
@@ -20,7 +22,7 @@ public class Controls {
     //Variables
     Frame frame = new Frame();
     JPanel window = new JPanel();
-    JPanel win = new JPanel();
+    JLabel renderlabel;
     JButton cap;
     Rectangle rcap;
     private int width = 240;
@@ -49,8 +51,16 @@ public class Controls {
         f.setVisible(true);
         window.setLayout(null);
 
+        frameRender();
         drawButtons();
         f.repaint();
+    }
+
+    private void frameRender() {
+        ImageIcon render = new ImageIcon(frame.frame().getBufferedImage());
+        renderlabel = new JLabel(render);
+        renderlabel.setBounds(0, 0, 640, 480);
+        window.add(renderlabel);
     }
 
     //Draws the buttons and adds functions to them
@@ -80,6 +90,6 @@ public class Controls {
 
     public static void main(String args[]) {
         Controls controls = new Controls();
-        Camera camera = new Camera();
+        //Camera camera = new Camera();
     }
 }
