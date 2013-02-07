@@ -27,7 +27,7 @@ public class Save_as extends JFrame {
     private JTextField filename = new JTextField(), dir = new JTextField();
     Controls controls = new Controls();
     private JButton open = new JButton("Open"), save = new JButton("Save");
-    JFileChooser c = new JFileChooser();
+    protected static JFileChooser c = new JFileChooser();
     public static String pathname;
     private String lastframenum = "Last Captured Picture";
     private int saveframenum = controls.framename;

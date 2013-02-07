@@ -17,7 +17,7 @@ import java.util.Properties;
 public class Save_Algorithm {
 
     Properties prop = new Properties();
-    String path = Save_as.pathname + "project.animation";
+    String path = Save_as.pathname + Save_as.c.getSelectedFile().getName() + ".animation";
     public static File imgdir = new File(Save_as.pathname + "\\images");
     File dir = new File(Save_as.pathname);
 
