@@ -18,7 +18,6 @@ import javax.swing.UIManager;
  *
  * @author Christopher Williams
  */
-
 //Not Functional Yet
 public class VideoSettings extends JFrame {
 

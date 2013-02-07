@@ -3,7 +3,6 @@ package a;
 import com.googlecode.javacv.cpp.opencv_core;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 /**
@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 public class Controls {
 
     //Variables
+    Timer timer;
     Frame frame = new Frame();
     JPanel window = new JPanel();
     JLabel renderlabel;
@@ -30,7 +31,7 @@ public class Controls {
     private int height = 720;
     public static final JFrame f = new JFrame();
     Toolbar toolbar = new Toolbar();
-    private int framename = 0;
+    protected static int framename = 0;
 
     //handles the JFrame and Main Content
     public Controls() {
@@ -58,23 +59,21 @@ public class Controls {
         f.repaint();
     }
 
-    private void imageUpdate() {
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // renderlabel.repaint();
-        }
-    }
-
     //renders buffered image from frame
     private void frameRender() {
-            ImageIcon render = new ImageIcon(frame.frame().getBufferedImage());
-            renderlabel = new JLabel(render);
-            renderlabel.setBounds((width / 2) - 320, 50, 640, 480);
-            window.add(renderlabel);
-            //imageUpdate();
+        ActionListener actionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                ImageIcon render = new ImageIcon(frame.frame().getBufferedImage());
+                renderlabel = new JLabel(render);
+                renderlabel.setBounds((width / 2) - 320, 50, 640, 480);
+                window.add(renderlabel);
+                renderlabel.revalidate();
+                renderlabel.repaint();
+            }
+        };
+        timer = new Timer(100, actionListener);
+        timer.setInitialDelay(1000);
+        timer.start();
     }
 
     //Draws the buttons and adds functions to them
@@ -104,6 +103,7 @@ public class Controls {
 
     public static void main(String args[]) {
         Controls controls = new Controls();
+        Save_as save = new Save_as();
         //Camera camera = new Camera();
     }
 }

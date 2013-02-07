@@ -6,6 +6,7 @@ package a;
 
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core;
+import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 /**
  *
@@ -29,5 +30,9 @@ public class Frame {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void cvRelease(IplImage img) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

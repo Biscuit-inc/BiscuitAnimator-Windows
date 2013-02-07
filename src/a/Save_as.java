@@ -25,10 +25,12 @@ import javax.swing.JTextField;
 public class Save_as extends JFrame {
 
     private JTextField filename = new JTextField(), dir = new JTextField();
+    Controls controls = new Controls();
     private JButton open = new JButton("Open"), save = new JButton("Save");
     JFileChooser c = new JFileChooser();
     public static String pathname;
     private String lastframenum = "Last Captured Picture";
+    private int saveframenum = controls.framename;
     private int width = 300;
     private int height = 130;
 
@@ -61,7 +63,7 @@ public class Save_as extends JFrame {
             public void actionPerformed(ActionEvent ab) {
                 try {
                     Save_Algorithm savealg = new Save_Algorithm();
-                    savealg.projectFile(lastframenum, WIDTH);
+                    savealg.projectFile(lastframenum, saveframenum);
                 } catch (RuntimeException e) {
                     throw e;
                 } catch (IOException ex) {

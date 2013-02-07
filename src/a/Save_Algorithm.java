@@ -36,7 +36,7 @@ public class Save_Algorithm {
             }
             OutputStream write = new FileOutputStream(path);
             prop.setProperty(key, Integer.toString(value));
-            prop.storeToXML(write, "Frames per Second");
+            prop.storeToXML(write, "Project Specific Settings");
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {

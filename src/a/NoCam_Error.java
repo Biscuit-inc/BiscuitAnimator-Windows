@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package a;
 
 import javax.swing.JFrame;
@@ -19,7 +18,7 @@ public class NoCam_Error {
     JPanel errwin = new JPanel();
     private JLabel errmsg;
 
-    public NoCam_Error(){
+    public NoCam_Error() {
 
         errfr.getContentPane().add(errwin);
         errfr.setVisible(true);

@@ -80,15 +80,15 @@ public class Configure {
 
     public void setFPS(int FPS) {
         if (FPS == 15) {
-           // con.fpsselection = 0;
+            // con.fpsselection = 0;
         }
 
         if (FPS == 24) {
-          //  con.fpsselection = 1;
+            //  con.fpsselection = 1;
         }
 
         if (FPS == 30) {
-          //  con.fpsselection = 2;
+            //  con.fpsselection = 2;
         }
     }
 }

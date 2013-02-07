@@ -4,12 +4,13 @@
  */
 package a;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -31,14 +32,15 @@ public class Toolbar {
     JMenuItem vidsets = new JMenuItem("Video Settings");
     JMenuItem cam = new JMenuItem("Camera Settings");
     //File
+    JMenuItem openfile = new JMenuItem("Open Project");
     JMenuItem save = new JMenuItem("Save");
-    JMenuItem saveas = new JMenuItem("Project Path");
+    JMenuItem saveas = new JMenuItem("Save_as");
     JMenuItem exit = new JMenuItem("exit");
     JMenuItem export = new JMenuItem("Export");
     //Tools
     JMenuItem capwin = new JMenuItem("Capture Window");
     JMenuItem photo = new JMenuItem("Video Editing");
-    JMenuItem photoe = new JMenuItem("Photo Editor");
+    JMenuItem video = new JMenuItem("Photo Editor");
     //Help
     JMenuItem about = new JMenuItem("About...");
     JMenuItem mshelp = new JMenuItem("Help");
@@ -159,6 +161,7 @@ public class Toolbar {
     //File menu list
     private void createAndShowMenu(final JComponent component, final AbstractButton moreButton) {
         JPopupMenu menu = new JPopupMenu();
+        menu.add(openfile);
         menu.add(save);
         menu.add(saveas);
         menu.add(export);
@@ -185,7 +188,7 @@ public class Toolbar {
         JPopupMenu menu = new JPopupMenu();
         menu.add(capwin);
         menu.add(photo);
-        menu.add(photoe);
+        menu.add(video);
 
         menu.addPopupMenuListener(new PopupMenuListener() {
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -205,6 +208,12 @@ public class Toolbar {
 
     //Actions performed when clicked
     private void actionMethod() {
+
+        openfile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                //add TODO code
+            }
+        });
 
         capwin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -250,7 +259,12 @@ public class Toolbar {
 
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                //add TODO code
+                try {
+                    Save_Algorithm sa = new Save_Algorithm();
+                    sa.projectFile("Last Captured Picture", Controls.framename);
+                } catch (IOException ex) {
+                    Logger.getLogger(Toolbar.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -261,7 +275,7 @@ public class Toolbar {
             }
         });
 
-        photoe.addActionListener(new ActionListener() {
+        video.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     Runtime runtime = Runtime.getRuntime();
