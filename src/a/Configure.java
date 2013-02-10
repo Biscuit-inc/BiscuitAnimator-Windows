@@ -25,21 +25,6 @@ public class Configure {
     String path = "settings/config.xml";
     //Controls con = new Controls();
 
-    //Method that wrights the XML document
-    public void saveforConfig(String key, String w) {
-        try {
-            File file = new File(path);
-            boolean exist = file.exists();
-            if (!exist) {
-                file.createNewFile();
-            }
-            OutputStream write = new FileOutputStream(path);
-            prop.setProperty(key, w);
-            prop.storeToXML(write, "FileFormat");
-        } catch (Exception e) {
-        }
-    }
-
     public void saveConfig(String key, int value) {
         try {
             File file = new File(path);
@@ -61,21 +46,11 @@ public class Configure {
         try {
             InputStream read = new FileInputStream(path);
             prop.loadFromXML(read);
-            String width = prop.getProperty("width");
-            String height = prop.getProperty("height");
-            String fps = prop.getProperty("fps");
-            System.out.println("Frame cap selected = " + fps);
-            System.out.println("width = " + width + ", height = " + height);
-            //setResolution(Integer.parseInt(width), Integer.parseInt(height));
-            setFPS(Integer.parseInt(fps));
+            //add stuff here
             read.close();
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
-    }
-
-    //wrights what the current res is in the XML
-    public void setResolution(String format) {
     }
 
     public void setFPS(int FPS) {

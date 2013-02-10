@@ -29,7 +29,7 @@ public class Help {
             e.printStackTrace();
         }
         f.getContentPane().add(window);
-        f.setTitle("MasterShot Help");
+        f.setTitle("- Help");
         f.setSize(width, height);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationRelativeTo(null);

@@ -50,7 +50,7 @@ public class Controls {
         f.setSize(width, height);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocationRelativeTo(null);
-        f.setResizable(false);
+        f.setResizable(true);
         f.setVisible(true);
         window.setLayout(null);
 
