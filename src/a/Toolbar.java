@@ -39,8 +39,8 @@ public class Toolbar {
     JMenuItem export = new JMenuItem("Export");
     //Tools
     JMenuItem capwin = new JMenuItem("Capture Window");
-    JMenuItem photo = new JMenuItem("Video Editing");
-    JMenuItem video = new JMenuItem("Photo Editor");
+    JMenuItem photo = new JMenuItem("Image Editor");
+    JMenuItem video = new JMenuItem("Video Editor");
     //Help
     JMenuItem about = new JMenuItem("About...");
     JMenuItem mshelp = new JMenuItem("Help");
@@ -241,13 +241,13 @@ public class Toolbar {
 
         photo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                //add TODO code
+                Photo_editor pe = new Photo_editor();
             }
         });
 
         export.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                VideoWriter vidwriter = new VideoWriter(); //not working 
+                VideoWriter vidwriter = new VideoWriter(); //not working
             }
         });
 
@@ -279,7 +279,7 @@ public class Toolbar {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     Runtime runtime = Runtime.getRuntime();
-                    //need to build a photo editor
+                    //need to build a video editor
                     runtime.exec("");
                 } catch (IOException i) {
                     i.printStackTrace();

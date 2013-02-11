@@ -25,12 +25,11 @@ import javax.swing.JTextField;
 public class Save_as extends JFrame {
 
     private JTextField filename = new JTextField(), dir = new JTextField();
-    Controls controls = new Controls();
     private JButton open = new JButton("Path"), save = new JButton("Save");
     protected static JFileChooser c = new JFileChooser();
     public static String pathname;
     private String lastframenum = "Last Captured Picture";
-    private int saveframenum = controls.framename;
+    private int saveframenum = Controls.framename;
     private int width = 300;
     private int height = 130;
 
