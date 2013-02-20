@@ -2,19 +2,30 @@ package a;
 
 import com.googlecode.javacv.cpp.opencv_core;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JSlider;
+import javax.swing.JTabbedPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -27,16 +38,19 @@ import javax.swing.event.ChangeListener;
 public class Controls {
 
     //Variables
+    private TextArea scriptfield = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
     JSlider exp, red, green, blue;
-    JLabel lexp, lred, lgreen, lblue;
     Timer timer;
     Frame frame = new Frame();
     JPanel window = new JPanel();
-    JLabel renderlabel;
+    JPanel script = new JPanel();
+    JLabel renderlabel, lexp, lred, lgreen, lblue, timeline, scripteditor;
+    JTabbedPane tabs = new JTabbedPane(JTabbedPane.RIGHT);
+    Font font = new Font("Courier New", Font.PLAIN, 12);
     JButton cap;
     Rectangle rcap;
-    private int width = 1380;
-    private int height = 800;
+    private int width = 1440;
+    private int height = 870;
     public static final JFrame f = new JFrame();
     Toolbar toolbar = new Toolbar();
     protected static int framename = 0;
@@ -44,8 +58,12 @@ public class Controls {
     //handles the JFrame and Main Content
     public Controls() {
 
+        tabs.add("Frame Grabber", window);
+        tabs.add("Script Editor", script);
+        f.add(tabs);
+
         System.setProperty("sun.java2d.opengl", "True");
-        window.add(toolbar.toolBar, BorderLayout.WEST);
+        f.setJMenuBar(toolbar.toolBar);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (RuntimeException e) {
@@ -53,22 +71,57 @@ public class Controls {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        f.getContentPane().add(window);
         f.setTitle("Pre-Alpha-002-A");
         f.setSize(width, height);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocationRelativeTo(null);
-      //  f.setUndecorated(true);
         f.setResizable(true);
         f.setVisible(true);
         window.setLayout(null);
 
         sliderMethod();
+        timeLine();
         labels();
         eventAdder();
         frameRender();
         drawButtons();
+        scriptEditor();
         f.repaint();
+    }
+
+    private void sound() {
+        //Shutter release
+        try {
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File("resources/sounds/350d-shutter.wav"));
+            Clip shutter = AudioSystem.getClip();
+            shutter.open(audio);
+            shutter.start();
+        } catch (UnsupportedAudioFileException uae) {
+            System.out.println(uae);
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        } catch (LineUnavailableException lua) {
+            System.out.println(lua);
+        }
+    }
+
+    //Script Editor
+    private void scriptEditor() {
+        scriptfield.setEditable(true);
+        scriptfield.setFont(font);
+        scriptfield.setPreferredSize(new Dimension(800, 700));
+        scriptfield.setCursor(null);
+        script.add(scriptfield);
+    }
+
+    //TimeLine
+    private void timeLine() {
+        timeline = new JLabel();
+        timeline.setBounds(0, 600, 1310, 200);
+        timeline.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        timeline.setToolTipText("Movie timeline");
+        timeline.setLayout(new GridLayout(3, 3));
+        window.add(timeline);
     }
 
     //Creates Labels for levels
@@ -100,6 +153,7 @@ public class Controls {
 
         //Red
         red = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
+        red.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         red.setBounds(10, 50, 255, 50);
         red.setMajorTickSpacing(10);
         red.setMinorTickSpacing(5);
@@ -109,6 +163,7 @@ public class Controls {
 
         //green
         green = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
+        green.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         green.setBounds(10, 120, 255, 50);
         green.setMajorTickSpacing(10);
         green.setMinorTickSpacing(5);
@@ -118,6 +173,7 @@ public class Controls {
 
         //Blue
         blue = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
+        blue.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         blue.setBounds(10, 190, 255, 50);
         blue.setMajorTickSpacing(10);
         blue.setMinorTickSpacing(5);
@@ -127,6 +183,7 @@ public class Controls {
 
         //Exposure
         exp = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
+        exp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         exp.setBounds(10, 260, 255, 50);
         exp.setMajorTickSpacing(10);
         exp.setMinorTickSpacing(5);
@@ -167,8 +224,9 @@ public class Controls {
         ImageIcon render = new ImageIcon(frame.frame().getBufferedImage());
         renderlabel = new JLabel(render);
         renderlabel.setBounds((width / 2) - 320, 50, 640, 480);
-        renderlabel.setBorder(BorderFactory.createLineBorder(Color.lightGray,3));
+        renderlabel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 3));
         renderlabel.setToolTipText("Live camera feed");
+        renderlabel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         window.add(renderlabel);
         renderlabel.revalidate();
         renderlabel.repaint();
@@ -181,7 +239,9 @@ public class Controls {
 
     //Draws the buttons and adds functions to them
     private void drawButtons() {
+        //ImageIcon capimage = new ImageIcon("resources/images/capture.gif");
         cap = new JButton("Capture");
+        cap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         rcap = new Rectangle((width / 2) - 50, 540, 80, 25);
         cap.setBounds(rcap);
         cap.setToolTipText("Capture Frame");
@@ -192,6 +252,7 @@ public class Controls {
                 try {
                     opencv_core.IplImage img = frame.frame();
                     if (img != null) {
+                        sound();
                         cvSaveImage(Save_Algorithm.imgdir + "\\image_" + framename + ".jpg", img);
                         System.out.println("Frame Captured at... " + Save_as.pathname);
                         framename++;
@@ -208,6 +269,6 @@ public class Controls {
     public static void main(String args[]) {
         Controls controls = new Controls();
         Save_as save = new Save_as();
-        //Camera camera = new Camera();
+        // Camera camera = new Camera();
     }
 }

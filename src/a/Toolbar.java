@@ -4,6 +4,7 @@
  */
 package a;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -13,10 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -27,10 +28,11 @@ import javax.swing.event.PopupMenuListener;
  */
 public class Toolbar {
 
-    final JToolBar toolBar = new JToolBar();
+    final JMenuBar toolBar = new JMenuBar();
     //Settings
     JMenuItem vidsets = new JMenuItem("Video Settings");
     JMenuItem cam = new JMenuItem("Camera Settings");
+    JMenuItem soundsettings = new JMenuItem("Audio Settings");
     //File
     JMenuItem openfile = new JMenuItem("Open Project");
     JMenuItem save = new JMenuItem("Save");
@@ -46,33 +48,35 @@ public class Toolbar {
     JMenuItem mshelp = new JMenuItem("Help");
 
     public Toolbar() {
+
         toolBar.add(createMoreButton());
         toolBar.add(createPrograms());
         toolBar.add(createSettings());
         toolBar.add(createHelp());
-        toolBar.setFloatable(false);
 
         actionMethod();
     }
 
     //Settings menu
     private AbstractButton createSettings() {
-        final JToggleButton helpButton = new JToggleButton("Settings");
-        helpButton.addItemListener(new ItemListener() {
+        final JToggleButton settingsButton = new JToggleButton("Settings");
+        settingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        settingsButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    createSettingsMenu((JComponent) e.getSource(), helpButton);
+                    createSettingsMenu((JComponent) e.getSource(), settingsButton);
                 }
             }
         });
-        helpButton.setFocusable(false);
-        helpButton.setHorizontalTextPosition(SwingConstants.LEADING);
-        return helpButton;
+        settingsButton.setFocusable(false);
+        settingsButton.setHorizontalTextPosition(SwingConstants.LEADING);
+        return settingsButton;
     }
 
     //Help menu
     private AbstractButton createHelp() {
         final JToggleButton helpButton = new JToggleButton("Help");
+        helpButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         helpButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -88,6 +92,7 @@ public class Toolbar {
     //File menu
     private AbstractButton createMoreButton() {
         final JToggleButton moreButton = new JToggleButton("File");
+        moreButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         moreButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -103,6 +108,7 @@ public class Toolbar {
     //Tools menu
     private AbstractButton createPrograms() {
         final JToggleButton programs = new JToggleButton("Tools");
+        programs.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         programs.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -141,6 +147,8 @@ public class Toolbar {
     private void createSettingsMenu(final JComponent component, final AbstractButton moreButton) {
         JPopupMenu menu = new JPopupMenu();
         menu.add(vidsets);
+        menu.add(cam);
+        menu.add(soundsettings);
 
         menu.addPopupMenuListener(new PopupMenuListener() {
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {

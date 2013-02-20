@@ -57,6 +57,9 @@ public class Save_as extends JFrame {
 
     private void openL() {
 
+        open.setToolTipText("Configure path to save to");
+        save.setToolTipText("Confirm that the path is correct");
+
         //Saves path and creates folder
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ab) {
