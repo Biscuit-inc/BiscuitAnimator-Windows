@@ -1,7 +1,9 @@
 package a;
 
+import com.googlecode.javacv.FrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
+import edsdk.utils.CanonCamera;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -11,8 +13,12 @@ import java.awt.Rectangle;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -74,6 +80,15 @@ public class Controls {
         f.setTitle("Pre-Alpha-002-A");
         f.setSize(width, height);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                //camera.endLiveView();
+                //camera.closeSession();
+                CanonCamera.close();
+                System.exit(0);
+            }
+        });
         f.setLocationRelativeTo(null);
         f.setResizable(true);
         f.setVisible(true);
@@ -219,8 +234,6 @@ public class Controls {
 
     //renders buffered image from frame
     private void frameRender() {
-//        ActionListener actionListener = new ActionListener() {
-//            public void actionPerformed(ActionEvent actionEvent) {
         ImageIcon render = new ImageIcon(frame.frame().getBufferedImage());
         renderlabel = new JLabel(render);
         renderlabel.setBounds((width / 2) - 320, 50, 640, 480);
@@ -230,11 +243,6 @@ public class Controls {
         window.add(renderlabel);
         renderlabel.revalidate();
         renderlabel.repaint();
-//            }
-//        };
-//        timer = new Timer(100, actionListener);
-//        timer.setInitialDelay(1000);
-//        timer.start();
     }
 
     //Draws the buttons and adds functions to them
