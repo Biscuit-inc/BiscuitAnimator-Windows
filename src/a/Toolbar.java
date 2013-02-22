@@ -4,6 +4,7 @@
  */
 package a;
 
+import edsdk.utils.CanonCamera;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +44,10 @@ public class Toolbar {
     JMenuItem capwin = new JMenuItem("Capture Window");
     JMenuItem photo = new JMenuItem("Image Editor");
     JMenuItem video = new JMenuItem("Video Editor");
+    //Capture device
+    JMenuItem webcam = new JMenuItem("Webcam");
+    JMenuItem canonslr = new JMenuItem("Canon DSLR");
+    JMenuItem nikonslr = new JMenuItem("Nikon DSLR");
     //Help
     JMenuItem about = new JMenuItem("About...");
     JMenuItem mshelp = new JMenuItem("Help");
@@ -52,9 +57,23 @@ public class Toolbar {
         toolBar.add(createMoreButton());
         toolBar.add(createPrograms());
         toolBar.add(createSettings());
+        toolBar.add(captureDevice());
         toolBar.add(createHelp());
 
         actionMethod();
+    }
+
+    //Capture Device Menu
+    private AbstractButton captureDevice() {
+        final JToggleButton capdevice = new JToggleButton("Capture Device");
+        capdevice.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    createcapdevMenu((JComponent) e.getSource(), capdevice);
+                }
+            }
+        });
+        return capdevice;
     }
 
     //Settings menu
@@ -119,6 +138,29 @@ public class Toolbar {
         programs.setFocusable(false);
         programs.setHorizontalTextPosition(SwingConstants.LEADING);
         return programs;
+    }
+
+    //Capture Device
+    private void createcapdevMenu(final JComponent component, final AbstractButton moreButton) {
+        JPopupMenu menu = new JPopupMenu();
+        menu.add(webcam);
+        menu.add(canonslr);
+        menu.add(nikonslr);
+
+        menu.addPopupMenuListener(new PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+            }
+
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                moreButton.setSelected(false);
+            }
+
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                moreButton.setSelected(false);
+            }
+        });
+
+        menu.show(component, 0, component.getHeight());
     }
 
     //Help menu list
@@ -278,8 +320,11 @@ public class Toolbar {
 
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                Camera.canvas.dispose();
-                Controls.f.dispose();
+                CanonCamera camera = new CanonCamera();
+                camera.endLiveView();
+                camera.closeSession();
+                CanonCamera.close();
+                System.exit(0);
             }
         });
 
