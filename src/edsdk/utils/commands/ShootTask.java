@@ -46,7 +46,7 @@ public class ShootTask extends CanonTask<File> {
     @Override
     public NativeLong apply(NativeLong inEvent, __EdsObject inRef, EdsVoid inContext) {
         if (inEvent.intValue() == EdSdkLibrary.kEdsObjectEvent_DirItemCreated) {
-            System.out.println("Looks like we got a file!");
+            System.out.println("Picture taken!");
             setResult(CanonUtils.download(inRef, dest, false));
             finish();
         }

@@ -5,10 +5,11 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-//Shows image but not pratical 
+//Rewrite for dual monitor ease of use
 public class Camera extends JPanel implements Runnable {
 
     Frame frame = new Frame();
+    //Without using canvas frame because it sucks
     public static final CanvasFrame canvas = new CanvasFrame("");
     IplImage imgcheck = frame.frame();
 

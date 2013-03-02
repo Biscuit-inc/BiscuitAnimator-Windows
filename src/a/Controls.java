@@ -38,7 +38,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -53,23 +52,24 @@ public class Controls {
     private TextArea scriptfield = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
     private JSlider exp, red, green, blue;
     long canonbatterylg = camera.getProperty(kEdsPropID_BatteryLevel);
-    private Timer timer;
-    private Frame frame = new Frame();
+    private static Frame frame = new Frame();
     private static JPanel window = new JPanel();
     private JPanel script = new JPanel();
-    private static JLabel renderCanon, renderWebcam, lexp, lred, lgreen, lblue, timeline, canonBattery;
+    private JPanel audioStudio = new JPanel();
+    private static JLabel renderCanon, renderWebcam, renderNikon, lexp, lred, lgreen, lblue, timeline, canonBattery;
     private JTabbedPane tabs = new JTabbedPane(JTabbedPane.RIGHT);
     private Font font = new Font("Courier New", Font.PLAIN, 12);
-    private JButton cap;
+    private JButton cap, startRecording;
     private Rectangle rcap;
-    private static int width = 1660;
-    private int height = 1440;
+    private static int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private int height = Toolkit.getDefaultToolkit().getScreenSize().height;
     public static final JFrame f = new JFrame();
     private Toolbar toolbar = new Toolbar();
+    private audioRecorder audio = new audioRecorder();
     protected static int framename = 0;
-    //final File fil = new File(Save_Algorithm.imgdir);
     private static CanonCamera camera = new CanonCamera();
     static boolean canon = true;
+    static boolean nikon = true;
     static boolean webcam = true;
 
     public static void main(String args[]) throws InterruptedException {
@@ -77,31 +77,81 @@ public class Controls {
         camera.beginLiveView();
         new Controls();
         new Save_as();
-        renderCanon = new JLabel();
 
-        //Renders image from canon DSLR
-        while (canon = true) {
-            try {
-                Thread.sleep(50);
-                BufferedImage image = camera.downloadLiveView();
-                if (image != null) {
-                    renderCanon.setIcon(new ImageIcon(image));
-                    renderCanon.setBounds((width / 2) - 528, 10, 1056, 704);
-                    renderCanon.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 3));
-                    renderCanon.setToolTipText("Live Canon DSLR feed");
-                    renderCanon.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                    window.add(renderCanon);
-                    image.flush();
+        if (camera.getEdsCamera() != null) {
+            System.out.println("Canon DSLR Attached");
+            canonSLR(camera);
+        } else {
+            System.out.println("Webcam Attached");
+            webcamRender();
+        }
+    }
+
+    //Renders image from nikon DSLR
+    private static void nikonSLR() {
+        //NIKON CODE !!NEED NIKON CAMERA TO TEST AND THE API WRAPPERS IN JAVA!!
+    }
+
+    //Renders image from canon DSLR
+    private static void canonSLR(final CanonCamera camera) {
+        renderCanon = new JLabel();
+        if (canon = true) {
+            while (canon = true) {
+                try {
+                    Thread.sleep(50);
+                    BufferedImage image = camera.downloadLiveView();
+                    if (image != null) {
+                        renderCanon.setIcon(new ImageIcon(image));
+                        renderCanon.setBounds((width / 2) - 528, 10, 1056, 704);
+                        renderCanon.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 3));
+                        renderCanon.setToolTipText("Live Canon DSLR feed");
+                        renderCanon.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        window.add(renderCanon);
+                        System.out.println("Battery: " + camera.getProperty(kEdsPropID_BatteryLevel));
+                        image.flush();
+                    }
+//                    else {
+//                        camera.endLiveView();
+//                        camera.closeSession();
+//                        canon = true;
+//                        break;
+//                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Controls.class.getName()).log(Level.SEVERE, null, ex);
                 }
-//                else {
-//                    camera.endLiveView();
-//                    camera.closeSession();
-//                    canon = false;
-//                    break;
-//                }
-            } catch (InterruptedException ex) {
+            }
+        }
+    }
+
+    //renders buffered image from webcam
+    private static void webcamRender() {
+        renderWebcam = new JLabel();
+        if (webcam = true) {
+            while (webcam = true) {
+                try {
+                    Thread.sleep(20);
+                    BufferedImage webcamImage = (frame.frame().getBufferedImage());
+                    if (webcamImage != null) {
+                        renderWebcam.setIcon(new ImageIcon(webcamImage));
+                        renderWebcam.setBounds((width / 2) - 320, 50, 640, 480);
+                        renderWebcam.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 3));
+                        renderWebcam.setToolTipText("Live webcam feed");
+                        renderWebcam.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        window.add(renderWebcam);
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Controls.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            webcam = false;
+            try {
+                frame.grabber.stop();
+            } catch (FrameGrabber.Exception ex) {
                 Logger.getLogger(Controls.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+
         }
     }
 
@@ -110,6 +160,7 @@ public class Controls {
 
         tabs.add("Frame Grabber", window);
         tabs.add("Script Editor", script);
+        tabs.add("Audio Recording", audioStudio);
         f.add(tabs);
 
         System.setProperty("sun.java2d.opengl", "True");
@@ -121,7 +172,7 @@ public class Controls {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        f.setTitle("Pre-Alpha-002-A");
+        f.setTitle("Pre-Alpha-003-A");
         f.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
         f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.addWindowListener(new WindowAdapter() {
@@ -133,7 +184,8 @@ public class Controls {
                 try {
                     frame.grabber.stop();
                 } catch (FrameGrabber.Exception ex) {
-                    Logger.getLogger(Controls.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Controls.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
                 System.exit(0);
             }
@@ -146,31 +198,26 @@ public class Controls {
         //Method init
         canonCameraInfo();
         sliderMethod();
+        audioEditor();
         timeLine();
         labels();
         eventAdder();
-        frameRender();
         drawButtons();
         scriptEditor();
         f.repaint();
     }
 
+    //Canon DSLR Information
     private void canonCameraInfo() {
-        canonBattery = new JLabel("Battery " + camera.getProperty(kEdsPropID_BatteryLevel));
+        //IF statement to check if canon SLR is attached
+        canonBattery = new JLabel("Battery: " + camera.getProperty(kEdsPropID_BatteryLevel));
         canonBattery.setBounds(1400, 10, 100, 10);
         canonBattery.setFont(font);
         window.add(canonBattery);
-    }
 
-    //NOT WORKING
-    private void checkCapDevices() {
-
-        if (camera.downloadLiveView() != null) {
-            canon = true;
-        }
-
-        if (frame.frame() != null) {
-            webcam = true;
+        if (canonbatterylg == 1) {
+            JLabel batteryEmpty = new JLabel("Low Battery");
+            batteryEmpty.setBounds((width / 2), 500, 100, 10);
         }
     }
 
@@ -188,6 +235,17 @@ public class Controls {
         } catch (LineUnavailableException lua) {
             System.out.println(lua);
         }
+    }
+
+    //Audio recording\mixing
+    private void audioEditor() {
+        audioStudio.add(audio.aifcBtn);
+        audioStudio.add(audio.aiffBtn);
+        audioStudio.add(audio.auBtn);
+        audioStudio.add(audio.captureBtn);
+        audioStudio.add(audio.sndBtn);
+        audioStudio.add(audio.stopBtn);
+        audioStudio.add(audio.waveBtn);
     }
 
     //Script Editor
@@ -302,52 +360,49 @@ public class Controls {
         }
     }
 
-    //renders buffered image from webcam !!NOT WORKING!!
-    private void frameRender() {
-//        if (webcam = true) {
-//            ImageIcon render = new ImageIcon(frame.frame().getBufferedImage());
-//            renderWebcam = new JLabel(render);
-//            renderWebcam.setBounds((width / 2) - 320, 50, 640, 480);
-//            renderWebcam.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 3));
-//            renderWebcam.setToolTipText("Live webcam feed");
-//            renderWebcam.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-//            window.add(renderWebcam);
-//            renderWebcam.revalidate();
-//            renderWebcam.repaint();
-//        } else {
-//            webcam = false;
-//            try {
-//                frame.grabber.stop();
-//            } catch (FrameGrabber.Exception ex) {
-//                Logger.getLogger(Controls.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-    }
-
     public File filename() {
         return new File(Save_Algorithm.imgdir + new SimpleDateFormat("yyyy\\MM\\dd\\HH-mm-ss").format(new Date()) + ".tiff");
     }
 
     //Draws the buttons and adds functions to them
     private void drawButtons() {
-        //ImageIcon capimage = new ImageIcon("resources/images/capture.gif");
+
+        startRecording = new JButton("Record");
+        startRecording.setBounds((width / 2) - 50, 750, 80, 25);
+        audioStudio.add(startRecording);
+
         cap = new JButton("Capture");
         cap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        rcap = new Rectangle((width / 2) - 50, (height / 2), 80, 25);
+        rcap = new Rectangle((width / 2) - 50, 750, 80, 25);
         cap.setBounds(rcap);
         cap.setToolTipText("Capture Frame");
         window.add(cap);
 
+        startRecording.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    new audioRecorder();
+                } catch (Exception ex) {
+                    Logger.getLogger(Controls.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
         cap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    //opencv_core.IplImage img = frame.frame();
                     if (camera != null) {
                         sound();
-                        // cvSaveImage(Save_Algorithm.imgdir + "\\image_" + framename + ".jpg", img);
                         camera.execute(new ShootTask(filename()));
-                        System.out.println("Frame Captured at... " + Save_as.pathname);
-                        // framename++;
+                        System.out.println("Frame Captured from Canon SLR at... " + Save_as.pathname);
+                    } else {
+                        opencv_core.IplImage img = frame.frame();
+                        if (frame.frame() != null) {
+                            sound();
+                            cvSaveImage(Save_Algorithm.imgdir + "\\image_" + framename + ".jpg", img);
+                            System.out.println("Frame Captured from Webcam at... " + Save_as.pathname);
+                            framename++;
+                        }
                     }
                 } catch (RuntimeException e) {
                     throw e;

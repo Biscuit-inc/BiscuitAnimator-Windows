@@ -11,7 +11,7 @@ import com.googlecode.javacv.cpp.opencv_core;
  *
  * @author Christopher Williams
  */
-//Gets image from camera
+//Gets image from webcam camera
 public class Frame {
 
     final OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0); //0 for first camera 1 for next etc.
