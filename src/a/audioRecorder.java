@@ -66,22 +66,7 @@ public class audioRecorder extends JPanel {
                     }//end actionPerformed
                 }//end ActionListener
                 );//end addActionListener()
-
-//        //Include the radio buttons in a group
-//        btnGroup.add(aifcBtn);
-//        btnGroup.add(aiffBtn);
-//        btnGroup.add(auBtn);
-//        btnGroup.add(sndBtn);
-//        btnGroup.add(waveBtn);
-//
-//        //Add the radio buttons to the JPanel
-//        btnPanel.add(aifcBtn);
-//        btnPanel.add(aiffBtn);
-//        btnPanel.add(auBtn);
-//        btnPanel.add(sndBtn);
-//        btnPanel.add(waveBtn);
-
-    }//end constructor
+    }
 
     //This method captures audio input from a
     // microphone and saves it in an audio file.
@@ -95,24 +80,13 @@ public class audioRecorder extends JPanel {
                     audioFormat);
             targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
 
-            //Create a thread to capture the microphone
-            // data into an audio file and start the
-            // thread running.  It will run until the
-            // Stop button is clicked.  This method
-            // will return after starting the thread.
             new CaptureThread().start();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
-        }//end catch
-    }//end captureAudio method
+        }
+    }
 
-    //This method creates and returns an
-    // AudioFormat object for a given set of format
-    // parameters.  If these parameters don't work
-    // well for you, try some of the other
-    // allowable parameter values, which are shown
-    // in comments following the declarations.
     private AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         //8000,11025,16000,22050,44100
