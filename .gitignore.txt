@@ -1,0 +1,3 @@
+dist/*
+Jar_Debugger.bat
+!.gitignore
