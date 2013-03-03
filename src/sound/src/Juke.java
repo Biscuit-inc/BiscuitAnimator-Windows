@@ -23,9 +23,7 @@ import javax.swing.table.*;
 /**
  * A JukeBox for sampled and midi sound files.  Features duration progress,
  * seek slider, pan and volume controls.
- *
- * @version @(#)Juke.java	1.19 00/01/31
- * @author Brian Lichtenwalter
+ * @author Christopher Williams
  */
 public class Juke extends JPanel implements Runnable, LineListener, MetaEventListener, ControlContext {
 
@@ -966,30 +964,30 @@ public class Juke extends JPanel implements Runnable, LineListener, MetaEventLis
     }
 
 
-    public static void main(String args[]) {
-        String media = "./audio";
-        final Juke juke = new Juke(args.length == 0 ? media : args[0]);
-        juke.open();
-        JFrame f = new JFrame("Juke Box");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-            public void windowIconified(WindowEvent e) {
-                juke.credits.interrupt();
-            }
-        });
-        f.getContentPane().add("Center", juke);
-        f.pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = 750;
-        int h = 340;
-        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
-        f.setSize(w, h);
-        f.setVisible(true);
-        if (args.length > 0) {
-            File file = new File(args[0]);
-            if (file == null && !file.isDirectory()) {
-                System.out.println("usage: java Juke audioDirectory");
-            }
-        }
-    }
+//    public static void main(String args[]) {
+//        String media = "./audio";
+//        final Juke juke = new Juke(args.length == 0 ? media : args[0]);
+//        juke.open();
+//        JFrame f = new JFrame("Juke Box");
+//        f.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {System.exit(0);}
+//            public void windowIconified(WindowEvent e) {
+//                juke.credits.interrupt();
+//            }
+//        });
+//        f.getContentPane().add("Center", juke);
+//        f.pack();
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        int w = 750;
+//        int h = 340;
+//        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
+//        f.setSize(w, h);
+//        f.setVisible(true);
+//        if (args.length > 0) {
+//            File file = new File(args[0]);
+//            if (file == null && !file.isDirectory()) {
+//                System.out.println("usage: java Juke audioDirectory");
+//            }
+//        }
+//    }
 }

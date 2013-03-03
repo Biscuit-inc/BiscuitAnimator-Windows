@@ -2,10 +2,7 @@ package sound.src;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.util.Vector;
-import javax.sound.midi.*;
-import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
@@ -13,9 +10,7 @@ import javax.swing.event.*;
 
 /**
  * The Java Sound Samples : MidiSynth, Juke, CapturePlayback, Groove.
- *
- * @version @(#)JavaSound.java	1.15 00/01/31
- * @author Brian Lichtenwalter
+ * @author Christopher Williams
  */
 public class JavaSound extends JPanel implements ChangeListener, Runnable {
 
@@ -132,40 +127,40 @@ public class JavaSound extends JPanel implements ChangeListener, Runnable {
     }
 
 
-    public static void main(String[] args) {
-
-        try {
-            if (MidiSystem.getSequencer() == null) {
-                System.err.println("MidiSystem Sequencer Unavailable, exiting!");
-                System.exit(1);
-            } else if (AudioSystem.getMixer(null) == null) {
-                System.err.println("AudioSystem Unavailable, exiting!");
-                System.exit(1);
-            }
-        } catch (Exception ex) { ex.printStackTrace(); System.exit(1); }
-
-        String media = "./audio";
-        if (args.length > 0) {
-            File file = new File(args[0]);
-            if (file == null && !file.isDirectory()) {
-                System.out.println("usage: java JavaSound audioDirectory");
-            } else {
-                media = args[0];
-            }
-        }
-
-        final JavaSound demo = new JavaSound(media);
-        JFrame f = new JFrame("Java Sound Demo");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-            public void windowDeiconified(WindowEvent e) { demo.open(); }
-            public void windowIconified(WindowEvent e) { demo.close(); }
-        });
-        f.getContentPane().add("Center", demo);
-        f.pack();
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        f.setLocation(d.width/2 - demo.width/2, d.height/2 - demo.height/2);
-        f.setSize(new Dimension(demo.width, demo.height));
-        f.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//
+//        try {
+//            if (MidiSystem.getSequencer() == null) {
+//                System.err.println("MidiSystem Sequencer Unavailable, exiting!");
+//                System.exit(1);
+//            } else if (AudioSystem.getMixer(null) == null) {
+//                System.err.println("AudioSystem Unavailable, exiting!");
+//                System.exit(1);
+//            }
+//        } catch (Exception ex) { ex.printStackTrace(); System.exit(1); }
+//
+//        String media = "./audio";
+//        if (args.length > 0) {
+//            File file = new File(args[0]);
+//            if (file == null && !file.isDirectory()) {
+//                System.out.println("usage: java JavaSound audioDirectory");
+//            } else {
+//                media = args[0];
+//            }
+//        }
+//
+//        final JavaSound demo = new JavaSound(media);
+//        JFrame f = new JFrame("Java Sound Demo");
+//        f.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {System.exit(0);}
+//            public void windowDeiconified(WindowEvent e) { demo.open(); }
+//            public void windowIconified(WindowEvent e) { demo.close(); }
+//        });
+//        f.getContentPane().add("Center", demo);
+//        f.pack();
+//        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+//        f.setLocation(d.width/2 - demo.width/2, d.height/2 - demo.height/2);
+//        f.setSize(new Dimension(demo.width, demo.height));
+//        f.setVisible(true);
+//    }
 }

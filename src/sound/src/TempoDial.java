@@ -10,9 +10,7 @@ import javax.swing.*;
 
 /**
  * Midi tempo dial in beats per minute.
- *
- * @version @(#)TempoDial.java	1.8 99/11/03
- * @author Brian Lichtenwalter
+ * @author Christopher Williams
  */
 public class TempoDial extends JPanel {
 
@@ -173,14 +171,14 @@ public class TempoDial extends JPanel {
     }
 
 
-    public static void main(String argv[]) {
-        JFrame f = new JFrame("Tempo Dial");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-        });
-        f.getContentPane().add("Center", new TempoDial());
-        f.pack();
-        f.setSize(new Dimension(200,140));
-        f.setVisible(true);
-    }
+//    public static void main(String argv[]) {
+//        JFrame f = new JFrame("Tempo Dial");
+//        f.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {System.exit(0);}
+//        });
+//        f.getContentPane().add("Center", new TempoDial());
+//        f.pack();
+//        f.setSize(new Dimension(200,140));
+//        f.setVisible(true);
+//    }
 }

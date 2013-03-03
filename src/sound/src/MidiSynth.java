@@ -13,9 +13,7 @@ import javax.swing.table.*;
 
 /**
  * Illustrates general MIDI melody instruments and MIDI controllers.
- *
- * @version @(#)MidiSynth.java	1.15 99/12/03
- * @author Brian Lichtenwalter
+ * @author Christopher Williams
  */
 public class MidiSynth extends JPanel implements ControlContext {
 
@@ -781,20 +779,20 @@ public class MidiSynth extends JPanel implements ControlContext {
     } // End class RecordFrame
 
 
-    public static void main(String args[]) {
-        final MidiSynth midiSynth = new MidiSynth();
-        midiSynth.open();
-        JFrame f = new JFrame("Midi Synthesizer");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-        });
-        f.getContentPane().add("Center", midiSynth);
-        f.pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = 760;
-        int h = 470;
-        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
-        f.setSize(w, h);
-        f.setVisible(true);
-    }
+//    public static void main(String args[]) {
+//        final MidiSynth midiSynth = new MidiSynth();
+//        midiSynth.open();
+//        JFrame f = new JFrame("Midi Synthesizer");
+//        f.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {System.exit(0);}
+//        });
+//        f.getContentPane().add("Center", midiSynth);
+//        f.pack();
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        int w = 760;
+//        int h = 470;
+//        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
+//        f.setSize(w, h);
+//        f.setVisible(true);
+//    }
 }

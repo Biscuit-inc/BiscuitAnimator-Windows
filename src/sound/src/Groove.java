@@ -32,8 +32,7 @@ import javax.swing.table.*;
  * bass :
  * on-off : 0-1, 3-4, 6-7, 8-9
  *
- * @version @(#)Groove.java	1.16 99/11/03
- * @author Brian Lichtenwalter
+ * @author Christopher Williams
  */
 public class Groove extends JPanel implements ActionListener, ControlContext, MetaEventListener {
 
@@ -387,20 +386,20 @@ public class Groove extends JPanel implements ActionListener, ControlContext, Me
     }
 
 
-    public static void main(String args[]) {
-        final Groove groove = new Groove();
-        JFrame f = new JFrame("Rhythm Groove Box");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-        });
-        f.getContentPane().add("Center", groove);
-        f.pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = 640;
-        int h = 440;
-        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
-        f.setSize(w, h);
-        f.show();
-        groove.open();
-    }
+//    public static void main(String args[]) {
+//        final Groove groove = new Groove();
+//        JFrame f = new JFrame("Rhythm Groove Box");
+//        f.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {System.exit(0);}
+//        });
+//        f.getContentPane().add("Center", groove);
+//        f.pack();
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        int w = 640;
+//        int h = 440;
+//        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
+//        f.setSize(w, h);
+//        f.show();
+//        groove.open();
+//    }
 }

@@ -16,13 +16,8 @@ import javax.swing.border.*;
 
 
 /**
- *  Capture/Playback sample.  Record audio in different formats
- *  and then playback the recorded audio.  The captured audio can
- *  be saved either as a WAVE, AU or AIFF.  Or load an audio file
- *  for streaming playback.
  *
- * @version @(#)CapturePlayback.java	1.11	99/12/03
- * @author Brian Lichtenwalter
+ * @author Christopher Williams
  */
 public class CapturePlayback extends JPanel implements ActionListener, ControlContext {
 
@@ -860,25 +855,5 @@ public class CapturePlayback extends JPanel implements ActionListener, ControlCo
             seconds = 0;
             repaint();
         }
-    } // End class SamplingGraph
-
-
-
-
-    public static void main(String s[]) {
-        CapturePlayback capturePlayback = new CapturePlayback();
-        capturePlayback.open();
-        JFrame f = new JFrame("Capture/Playback");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) { System.exit(0); }
-        });
-        f.getContentPane().add("Center", capturePlayback);
-        f.pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = 720;
-        int h = 340;
-        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
-        f.setSize(w, h);
-        f.show();
-    }
+    } 
 }
