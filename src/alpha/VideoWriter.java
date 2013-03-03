@@ -14,7 +14,7 @@ import static com.googlecode.javacv.cpp.opencv_highgui.*;
  */
 public class VideoWriter {
 
-    opencv_core.IplImage image = cvLoadImage("C:/Users/rick/Desktop/test/images/image_0.jpg"); //test path
+    opencv_core.IplImage image = cvLoadImage("imgs/image_0.jpg"); //test path
     private int CODEC_ID_H263;
     private int PIX_FMT_YUV420P;
 
@@ -23,7 +23,7 @@ public class VideoWriter {
     }
 
     private void writer() {
-        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder("C:/Users/rick/Desktop/test/images/test.avi", 256, 256); //test path
+        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder("test.avi", 256, 256); //test path
         try {
             recorder.setCodecID(CODEC_ID_H263);
             recorder.setFormat("avi");
