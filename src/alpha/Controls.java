@@ -204,7 +204,6 @@ public class Controls {
         window.setLayout(null);
 
         //Method init
-        canonCameraInfo();
         sliderMethod();
         audioEditor();
         timeLine();
@@ -213,20 +212,6 @@ public class Controls {
         drawButtons();
         scriptEditor();
         f.repaint();
-    }
-
-    //Canon DSLR Information
-    private void canonCameraInfo() {
-        //IF statement to check if canon SLR is attached
-        canonBattery = new JLabel("Battery: " + camera.getProperty(kEdsPropID_BatteryLevel));
-        canonBattery.setBounds(1400, 10, 100, 10);
-        canonBattery.setFont(font);
-        window.add(canonBattery);
-
-        if (canonbatterylg == 1) {
-            JLabel batteryEmpty = new JLabel("Low Battery");
-            batteryEmpty.setBounds((width / 2), 500, 100, 10);
-        }
     }
 
     private void sound() {
