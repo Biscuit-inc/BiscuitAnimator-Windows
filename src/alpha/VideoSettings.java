@@ -68,10 +68,12 @@ public class VideoSettings extends JFrame {
 
         rfps = new Rectangle(30, 40, 80, 25);
         fps.setBounds(rfps);
+        fps.add("10");
+        fps.add("12");
         fps.add("15");
         fps.add("24");
         fps.add("30");
-        fps.select(1);
+        fps.select(2);
         settings.add(fps);
 
         ok.addActionListener(new ActionListener() {
@@ -80,14 +82,22 @@ public class VideoSettings extends JFrame {
                 int f = 0;
 
                 if (fpsselection == 0) {
-                    f = 15;
+                    f = 10;
                 }
 
                 if (fpsselection == 1 || fpsselection == -1) {
-                    f = 24;
+                    f = 12;
                 }
 
                 if (fpsselection == 2) {
+                    f = 15;
+                }
+                
+                if (fpsselection == 3) {
+                    f = 24;
+                }
+                
+                if (fpsselection == 4) {
                     f = 30;
                 }
 
