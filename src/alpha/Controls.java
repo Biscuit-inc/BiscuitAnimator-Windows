@@ -190,7 +190,7 @@ public class Controls {
                 camera.closeSession();
                 CanonCamera.close();
                 try {
-                    frame.grabber.stop();
+                    Frame.grabber.stop();
                 } catch (FrameGrabber.Exception ex) {
                     Logger.getLogger(Controls.class
                             .getName()).log(Level.SEVERE, null, ex);
