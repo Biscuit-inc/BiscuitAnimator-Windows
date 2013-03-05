@@ -62,9 +62,9 @@ public class Configure {
             // con.fpsselection = 1;
         }
 
-        if (FPS == 20) {
-            // con.fpsselection = 2;
-        }
+        if (FPS == 20) {
+            //  con.fpsselection = 2
+        }
 
         if (FPS == 24) {
             //  con.fpsselection = 3;
