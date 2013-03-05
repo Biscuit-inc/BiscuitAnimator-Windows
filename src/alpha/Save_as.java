@@ -26,7 +26,6 @@ public class Save_as extends JFrame {
 
     private JTextField filename = new JTextField(), dir = new JTextField();
     private JButton open = new JButton("Path"), save = new JButton("Save"), openproj = new JButton("Open Project");
-    ;
     protected static JFileChooser c = new JFileChooser();
     public static String pathname;
     public static String projpath;
@@ -79,7 +78,7 @@ public class Save_as extends JFrame {
             }
         });
 
-        //Opens exiting project
+        //Opens existing project
         openproj.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent aa) {
                 int rval = c.showOpenDialog(Save_as.this);

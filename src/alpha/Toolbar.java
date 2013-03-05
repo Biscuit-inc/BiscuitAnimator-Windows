@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -30,6 +32,7 @@ import javax.swing.event.PopupMenuListener;
  */
 public class Toolbar {
 
+    protected static JFileChooser c = new JFileChooser();
     final JMenuBar toolBar = new JMenuBar();
     //Settings
     JMenuItem vidsets = new JMenuItem("Video Settings");
@@ -38,6 +41,7 @@ public class Toolbar {
     //File
     JMenuItem openfile = new JMenuItem("Open Project");
     JMenuItem scene = new JMenuItem("New Scene");
+    JMenu swscene = new JMenu("Switch Scenes");
     JMenuItem save = new JMenuItem("Save");
     JMenuItem saveas = new JMenuItem("New Project");
     JMenuItem exit = new JMenuItem("exit");
@@ -49,8 +53,12 @@ public class Toolbar {
     //Help
     JMenuItem about = new JMenuItem("About...");
     JMenuItem mshelp = new JMenuItem("Help");
+    //cascades
+    JMenuItem scenecas = new JMenuItem("Scene 1");
 
     public Toolbar() {
+
+        swscene.add(scenecas);
 
         toolBar.add(createMoreButton());
         toolBar.add(createPrograms());
@@ -58,6 +66,12 @@ public class Toolbar {
         toolBar.add(createHelp());
 
         actionMethod();
+    }
+
+    //scene switch algorithm
+    private void addMenuItem() {
+        JMenuItem s = new JMenuItem("Scene " + Save_Algorithm.scenenum);
+        swscene.add(s);
     }
 
     //Settings menu
@@ -165,7 +179,6 @@ public class Toolbar {
                 moreButton.setSelected(false);
             }
         });
-
         menu.show(component, 0, component.getHeight());
     }
 
@@ -175,6 +188,7 @@ public class Toolbar {
         menu.add(openfile);
         menu.add(save);
         menu.add(saveas);
+        menu.add(swscene);
         menu.add(scene);
         menu.add(export);
         menu.add(exit);
@@ -221,9 +235,15 @@ public class Toolbar {
     //Actions performed when clicked
     private void actionMethod() {
 
+        swscene.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actev) {
+            }
+        });
+
         scene.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent action) {
                 Save_Algorithm.newScene();
+                addMenuItem();
             }
         });
 
@@ -305,13 +325,7 @@ public class Toolbar {
 
         video.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    Runtime runtime = Runtime.getRuntime();
-                    //need to build a video editor
-                    runtime.exec("");
-                } catch (IOException i) {
-                    i.printStackTrace();
-                }
+                //need to build a video editor
             }
         });
     }
