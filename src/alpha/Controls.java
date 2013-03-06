@@ -52,24 +52,25 @@ public class Controls {
     private JSlider exp, red, green, blue;
     long canonbatterylg = camera.getProperty(kEdsPropID_BatteryLevel);
     private static Frame frame = new Frame();
-    private static JPanel window = new JPanel();
+    protected static JPanel window = new JPanel();
     private JPanel script = new JPanel();
     private JPanel audioStudio = new JPanel();
-    private static JLabel renderCanon, renderWebcam, renderNikon, lexp, lred, lgreen, lblue, timeline, canonBattery;
+    protected static JLabel renderCanon, renderWebcam, renderNikon, lexp, lred, lgreen, lblue, timeline;
     private JTabbedPane tabs = new JTabbedPane(JTabbedPane.RIGHT);
     private Font font = new Font("Courier New", Font.PLAIN, 12);
-    private JButton cap, record, stopBtn, playaudio;
+    private JButton cap, record, stopBtn, playaudio, playAnim;
     public static Choice audioformat = new Choice();
     public static Choice sampleRate = new Choice();
     public static Choice channels = new Choice();
     private Rectangle rcap;
-    private static int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+    protected static int width = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int height = Toolkit.getDefaultToolkit().getScreenSize().height;
     public static final JFrame f = new JFrame();
     private Toolbar toolbar = new Toolbar();
     protected static int framename = 0;
     private static CanonCamera camera = new CanonCamera();
     private audioRecorder audio = new audioRecorder();
+    ImageIcon[] images = new ImageIcon[10000];
     static boolean canon = true;
     static boolean nikon = true;
     static boolean webcam = true;
@@ -114,12 +115,6 @@ public class Controls {
                         System.out.println("Battery: " + camera.getProperty(kEdsPropID_BatteryLevel));
                         canonimage.flush();
                     }
-//                    else {
-//                        camera.endLiveView();
-//                        camera.closeSession();
-//                        canon = false;
-//                        break;
-//                    }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Controls.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -137,10 +132,10 @@ public class Controls {
                     BufferedImage webcamImage = (frame.frame().getBufferedImage());
                     if (webcamImage != null) {
                         renderWebcam.setIcon(new ImageIcon(webcamImage));
-                        renderWebcam.setBounds((width / 2) - 528, 10, 1056, 704);
+                        renderWebcam.setBounds(Frame.grabber.getImageWidth(), 10, Frame.grabber.getImageWidth(), Frame.grabber.getImageHeight());
                         renderWebcam.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 3));
-                        renderWebcam.setBackground(Color.BLACK);
                         renderWebcam.setToolTipText("Live webcam feed");
+                        renderWebcam.setMaximumSize(new Dimension(1056, 704));
                         renderWebcam.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                         canon = false;
                         nikon = false;
@@ -276,6 +271,7 @@ public class Controls {
                         audio.captureAudio();
                         System.out.println(audio.getAudioFormat().getSampleRate());
                         System.out.println(audio.getAudioFormat().getChannels());
+                        audio.audnum++;
                     }
                 });
 
@@ -408,12 +404,35 @@ public class Controls {
     //Draws the buttons and adds functions to them
     private void drawButtons() {
 
+        playAnim = new JButton("Play");
+        playAnim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        playAnim.setBounds((width / 2) + 30, 750, 80, 25);
+        playAnim.setToolTipText("Play Animation");
+        window.add(playAnim);
+
         cap = new JButton("Capture");
         cap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         rcap = new Rectangle((width / 2) - 50, 750, 80, 25);
         cap.setBounds(rcap);
         cap.setToolTipText("Capture Frame");
         window.add(cap);
+
+        //Not working right
+        playAnim.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent action) {
+                if (canon == true) {
+                    renderCanon.setIcon(null);
+                } else if (webcam == true) {
+                    for (int i = 0; i < framename; i++) {
+                        images[i] = new ImageIcon(Save_Algorithm.imgdir + "\\image_" + i + ".tiff");
+                        renderWebcam.setIcon(null);
+                        renderWebcam.setIcon(images[i]);
+                        renderWebcam.revalidate();
+                        System.out.println(images);
+                    }
+                }
+            }
+        });
 
         cap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -426,7 +445,7 @@ public class Controls {
                     } else if (canon == false) {
                         opencv_core.IplImage img = frame.frame();
                         sound();
-                        cvSaveImage(Save_Algorithm.imgdir + "\\image_" + framename + ".jpg", img);
+                        cvSaveImage(Save_Algorithm.imgdir + "\\image_" + framename + ".tiff", img);
                         System.out.println("Frame Captured from Webcam at... " + Save_as.pathname);
                         framename++;
                     }

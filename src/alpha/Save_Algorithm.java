@@ -26,10 +26,12 @@ public class Save_Algorithm {
     String proj = Save_as.projpath;
     public static File imgdir = new File(scene + "/imgs/");
     public static File audiodir = new File(scene + "/audio/");
+    protected File notes = new File(Save_as.pathname + "/notes/");
     File dir = new File(Save_as.pathname);
 
     public Save_Algorithm() throws IOException {
         dir.mkdir();
+        notes.mkdir();
         scene.mkdir();
         imgdir.mkdir();
         audiodir.mkdir();

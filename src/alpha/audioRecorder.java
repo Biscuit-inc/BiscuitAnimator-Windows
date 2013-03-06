@@ -21,6 +21,7 @@ public class audioRecorder extends JPanel {
 
     AudioFormat audioFormat;
     TargetDataLine targetDataLine;
+    protected int audnum = 0;
 
     public audioRecorder() {
     }
@@ -49,6 +50,7 @@ public class audioRecorder extends JPanel {
         //1,2
         float sampleRate = 8000;
         //8000,11025,16000,22050,44100
+
         if (Controls.sampleRate.getSelectedIndex() == 0) {
             sampleRate = 8000.0f;
         } else if (Controls.sampleRate.getSelectedIndex() == 1) {
@@ -92,22 +94,23 @@ public class audioRecorder extends JPanel {
             // based on the selected radio button.
             if (Controls.audioformat.getSelectedIndex() == 0) {
                 fileType = AudioFileFormat.Type.WAVE;
-                audioFile = new File(Save_Algorithm.audiodir + "\\audio.wav");
+                audioFile = new File(Save_Algorithm.audiodir + "\\audio_" + audnum + ".wav");
             } else if (Controls.audioformat.getSelectedIndex() == 1) {
                 fileType = AudioFileFormat.Type.AIFC;
-                audioFile = new File(Save_Algorithm.audiodir + "\\audio.aifc");
+                audioFile = new File(Save_Algorithm.audiodir + "\\audio_" + audnum + ".aifc");
             } else if (Controls.audioformat.getSelectedIndex() == 2) {
                 fileType = AudioFileFormat.Type.AIFF;
-                audioFile = new File(Save_Algorithm.audiodir + "\\audio.aif");
+                audioFile = new File(Save_Algorithm.audiodir + "\\audio_" + audnum + ".aif");
             } else if (Controls.audioformat.getSelectedIndex() == 3) {
                 fileType = AudioFileFormat.Type.AU;
-                audioFile = new File(Save_Algorithm.audiodir + "\\audio.au");
+                audioFile = new File(Save_Algorithm.audiodir + "\\audio_" + audnum + ".au");
             } else if (Controls.audioformat.getSelectedIndex() == 4) {
                 fileType = AudioFileFormat.Type.SND;
-                audioFile = new File(Save_Algorithm.audiodir + "\\audio.snd");
+                audioFile = new File(Save_Algorithm.audiodir + "\\audio_" + audnum + ".snd");
             }
 
             try {
+                
                 targetDataLine.open(audioFormat);
                 targetDataLine.start();
                 AudioSystem.write(

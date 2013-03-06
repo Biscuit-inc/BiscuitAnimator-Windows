@@ -57,9 +57,8 @@ public class Toolbar {
     JMenuItem scenecas = new JMenuItem("Scene 1");
 
     public Toolbar() {
-
+        
         swscene.add(scenecas);
-
         toolBar.add(createMoreButton());
         toolBar.add(createPrograms());
         toolBar.add(createSettings());

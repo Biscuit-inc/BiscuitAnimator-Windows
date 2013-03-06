@@ -7,6 +7,7 @@ package alpha;
 import com.googlecode.javacv.FFmpegFrameRecorder;
 import com.googlecode.javacv.cpp.opencv_core;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,6 +20,7 @@ public class VideoWriter {
      * we're doing some trouble shooting
      */
     opencv_core.IplImage image = cvLoadImage("imgs/image_0.jpg"); //test path
+    ImageIcon[] images = new ImageIcon[10000];
     private int CODEC_ID_H263;
     private int PIX_FMT_YUV420P;
 
@@ -28,7 +30,8 @@ public class VideoWriter {
             recorder.setFormat("avi");
             recorder.setPixelFormat(PIX_FMT_YUV420P);
             recorder.start();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < Controls.framename; i++) {
+                images[i] = new ImageIcon(Save_Algorithm.imgdir + "\\image_" + i + ".tiff");
                 recorder.record(image);
             }
             recorder.stop();
