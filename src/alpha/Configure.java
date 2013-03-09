@@ -19,13 +19,11 @@ import java.util.Properties;
  */
 public class Configure {
 
-    //Properitys
-    Properties prop = new Properties();
-    //String variable for the XML path
-    String path = "settings/config.xml";
-    //Controls con = new Controls();
+    static Properties prop = new Properties();
+    static String path = "settings/config.xml";
+    VideoWriter vw = new VideoWriter();
 
-    public void saveConfig(String key, int value) {
+    public static void saveConfig(String key, int value) {
         try {
             File file = new File(path);
             boolean exist = file.exists();
@@ -42,36 +40,41 @@ public class Configure {
     }
 
     //Loads the XML when you start each time
-    public void loadConfig(String path) {
+    protected static void loadConfig(String path) {
         try {
             InputStream read = new FileInputStream(path);
             prop.loadFromXML(read);
-            //add stuff here
+            String fps = prop.getProperty("fps");
+            System.out.println("Frame rate selected = " + fps);
+            setFPS(Float.parseFloat(fps));
             read.close();
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
     }
 
-    public void setFPS(int FPS) {
+    protected static void setFPS(float FPS) {
+        if (FPS == 10) {
+            VideoWriter.fpsselection = 0;
+        }
         if (FPS == 12) {
-            // con.fpsselection = 0;
+            VideoWriter.fpsselection = 1;
         }
 
         if (FPS == 15) {
-            // con.fpsselection = 1;
+            VideoWriter.fpsselection = 2;
         }
 
         if (FPS == 20) {
-            //  con.fpsselection = 2
+            VideoWriter.fpsselection = 3;
         }
 
         if (FPS == 24) {
-            //  con.fpsselection = 3;
+            VideoWriter.fpsselection = 4;
         }
 
         if (FPS == 30) {
-            //  con.fpsselection = 4;
+            VideoWriter.fpsselection = 5;
         }
     }
 }

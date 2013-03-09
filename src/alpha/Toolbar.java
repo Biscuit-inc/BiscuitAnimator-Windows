@@ -57,7 +57,7 @@ public class Toolbar {
     JMenuItem scenecas = new JMenuItem("Scene 1");
 
     public Toolbar() {
-        
+
         swscene.add(scenecas);
         toolBar.add(createMoreButton());
         toolBar.add(createPrograms());
@@ -285,7 +285,8 @@ public class Toolbar {
 
         export.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                VideoWriter vidwriter = new VideoWriter(); //not working
+                Configure.loadConfig("settings/config.xml");
+                VideoWriter vidwriter = new VideoWriter();
             }
         });
 

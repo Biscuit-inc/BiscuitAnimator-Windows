@@ -158,6 +158,14 @@ public class Controls {
         }
     }
 
+    //Have to keep program from crashing to make this work
+    private void error_Check() {
+        if (canon == false && webcam == false && nikon == false) {
+            new NoCam_Error();
+            System.out.println("Started");
+        }
+    }
+
     //handles the JFrame and Main Content
     public Controls() {
 
@@ -199,6 +207,7 @@ public class Controls {
         window.setLayout(null);
 
         //Method init
+        error_Check();
         sliderMethod();
         audioEditor();
         timeLine();

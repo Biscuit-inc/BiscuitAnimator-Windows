@@ -1,38 +1,64 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+///*
+// * To change this template, choose Tools | Templates
+// * and open the template in the editor.
+// */
 package alpha;
 
 import com.googlecode.javacv.FFmpegFrameRecorder;
 import com.googlecode.javacv.cpp.opencv_core;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
-import javax.swing.ImageIcon;
 
-/**
- *
- * @author Christopher Williams
- */
+///**
+// *
+// * @author Christopher Williams
+// */
 public class VideoWriter {
 
-    /**
-     * Not working it keeps crashing I've contacted the lead dev on javacv and
-     * we're doing some trouble shooting
-     */
-    opencv_core.IplImage image = cvLoadImage("imgs/image_0.jpg"); //test path
-    ImageIcon[] images = new ImageIcon[10000];
-    private int CODEC_ID_H263;
+    private int CODEC_ID_H264;
     private int PIX_FMT_YUV420P;
+    public static float fpsselection = 2;
+    private float FPS = 15;
 
     public VideoWriter() {
-        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder("test.avi", 256, 256); //test path
+        writer();
+     //   getFPS();
+    }
+
+    public float getFPS() {
+        if (fpsselection == 0) {
+            FPS = 10;
+        }
+        if (fpsselection == 1 || fpsselection == -1) {
+             FPS = 12;
+        }
+        if (fpsselection == 2) {
+             FPS = 15;
+        }
+        if (fpsselection == 3) {
+          FPS = 20;
+        }
+        if (fpsselection == 4) {
+          FPS = 24;
+        }
+        if (fpsselection == 5) {
+          FPS = 30;
+        }
+        return FPS;
+    }
+
+    private void writer() {
+        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(Save_Algorithm.videodir + "/test.wmv", 256, 256);
         try {
-            recorder.setFormat("avi");
+            recorder.setVideoCodec(CODEC_ID_H264);
             recorder.setPixelFormat(PIX_FMT_YUV420P);
+            recorder.setFrameRate(FPS);
+            recorder.setFormat("wmv");
             recorder.start();
-            for (int i = 0; i < Controls.framename; i++) {
-                images[i] = new ImageIcon(Save_Algorithm.imgdir + "\\image_" + i + ".tiff");
-                recorder.record(image);
+            for (int i = 0; i < 13; i++) {
+                opencv_core.IplImage images = cvLoadImage(Save_Algorithm.imgdir + "/image_" + i + ".tiff");
+                recorder.record(images);
+                System.out.println("Recording");
+                System.out.println("FPS: " + getFPS());
             }
             recorder.stop();
         } catch (Exception e) {
