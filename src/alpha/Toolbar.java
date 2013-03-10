@@ -4,6 +4,11 @@
  */
 package alpha;
 
+import Controllers.Canon;
+import static edsdk.a.EdSdkLibrary.kEdsPropID_Av;
+import static edsdk.a.EdSdkLibrary.kEdsPropID_ISOSpeed;
+import static edsdk.a.EdSdkLibrary.kEdsPropID_Tv;
+import static edsdk.a.EdSdkLibrary.kEdsPropID_WhiteBalance;
 import com.googlecode.javacv.FrameGrabber.Exception;
 import edsdk.utils.CanonCamera;
 import java.awt.Cursor;
@@ -36,7 +41,7 @@ public class Toolbar {
     final JMenuBar toolBar = new JMenuBar();
     //Settings
     JMenuItem vidsets = new JMenuItem("Video Settings");
-    JMenuItem cam = new JMenuItem("Camera Settings");
+    JMenu cam = new JMenu("Camera Settings");
     JMenuItem soundsettings = new JMenuItem("Audio Settings");
     //File
     JMenuItem openfile = new JMenuItem("Open Project");
@@ -55,9 +60,15 @@ public class Toolbar {
     JMenuItem mshelp = new JMenuItem("Help");
     //cascades
     JMenuItem scenecas = new JMenuItem("Scene 1");
+    JMenuItem canonControls = new JMenuItem("Canon Controller");
+    JMenuItem nikonControls = new JMenuItem("Nikon Controller");
+    JMenuItem webcamControls = new JMenuItem("Webcam Controller");
 
     public Toolbar() {
 
+        cam.add(canonControls);
+        cam.add(nikonControls);
+        cam.add(webcamControls);
         swscene.add(scenecas);
         toolBar.add(createMoreButton());
         toolBar.add(createPrograms());
@@ -67,7 +78,7 @@ public class Toolbar {
         actionMethod();
     }
 
-    //scene switch algorithm
+    //scene adding algorithm
     private void addMenuItem() {
         JMenuItem s = new JMenuItem("Scene " + Save_Algorithm.scenenum);
         swscene.add(s);
@@ -236,6 +247,13 @@ public class Toolbar {
 
         swscene.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actev) {
+                //addd TODO code
+            }
+        });
+
+        canonControls.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionevent){
+                new Canon();
             }
         });
 
@@ -300,8 +318,11 @@ public class Toolbar {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     Save_Algorithm sa = new Save_Algorithm();
-                    sa.projectFile("Last Captured Picture", Controls.framename);
-                    sa.projectFile("Number of Scenes", Save_Algorithm.scenenum);
+                    sa.projectFile("Last Captured Picture", Controls.framename, 1);
+                    sa.projectFile("Number of Scenes", Save_Algorithm.scenenum, 1);
+                    sa.projectFile("Shutter Speed", 1, Controls.camera.getProperty(kEdsPropID_Tv));
+                    sa.projectFile("F-stop", 1, Controls.camera.getProperty(kEdsPropID_Av));
+                    sa.projectFile("ISO", 1, Controls.camera.getProperty(kEdsPropID_ISOSpeed));
                 } catch (IOException ex) {
                     Logger.getLogger(Toolbar.class.getName()).log(Level.SEVERE, null, ex);
                 }

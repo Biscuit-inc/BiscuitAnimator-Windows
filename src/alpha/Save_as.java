@@ -67,8 +67,8 @@ public class Save_as extends JFrame {
             public void actionPerformed(ActionEvent ab) {
                 try {
                     Save_Algorithm savealg = new Save_Algorithm();
-                    savealg.projectFile("Last Captured Picture", saveframenum);
-                    savealg.projectFile("Number of Scenes", Save_Algorithm.scenenum);
+                    savealg.projectFile("Last Captured Picture", saveframenum, 1);
+                    savealg.projectFile("Number of Scenes", Save_Algorithm.scenenum, 1);
                 } catch (RuntimeException e) {
                     throw e;
                 } catch (IOException ex) {

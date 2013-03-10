@@ -1,5 +1,6 @@
 package alpha;
 
+import Controllers.Canon;
 import com.googlecode.javacv.FrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
@@ -38,8 +39,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -68,7 +67,7 @@ public class Controls {
     public static final JFrame f = new JFrame();
     private Toolbar toolbar = new Toolbar();
     protected static int framename = 0;
-    private static CanonCamera camera = new CanonCamera();
+    public static CanonCamera camera = new CanonCamera();
     private audioRecorder audio = new audioRecorder();
     ImageIcon[] images = new ImageIcon[10000];
     static boolean canon = true;
@@ -78,6 +77,7 @@ public class Controls {
     public static void main(String args[]) throws InterruptedException {
         camera.openSession();
         camera.beginLiveView();
+        //Canon.Constants();
         new Controls();
         new Save_as();
 
@@ -208,11 +208,8 @@ public class Controls {
 
         //Method init
         error_Check();
-        sliderMethod();
         audioEditor();
         timeLine();
-        labels();
-        eventAdder();
         drawButtons();
         scriptEditor();
         f.repaint();
@@ -311,99 +308,6 @@ public class Controls {
         timeline.setToolTipText("Movie timeline");
         timeline.setLayout(new GridLayout(3, 3));
         window.add(timeline);
-    }
-
-    //Creates Labels for levels
-    private void labels() {
-
-        //Red Label
-        lred = new JLabel("Red: 0");
-        lred.setBounds(10, 60, 90, 10);
-        window.add(lred);
-
-        //Green Label
-        lgreen = new JLabel("Green: 0");
-        lgreen.setBounds(10, 130, 90, 10);
-        window.add(lgreen);
-
-        //Blue Label
-        lblue = new JLabel("Blue: 0");
-        lblue.setBounds(10, 200, 90, 10);
-        window.add(lblue);
-
-        //Exposure Label
-        lexp = new JLabel("Exposure: 0");
-        lexp.setBounds(10, 280, 90, 10);
-        window.add(lexp);
-    }
-
-    //Creates Levels sliders
-    private void sliderMethod() {
-
-        //Red
-        red = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
-        red.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        red.setBounds(10, 10, 255, 50);
-        red.setMajorTickSpacing(10);
-        red.setMinorTickSpacing(5);
-        red.setPaintTicks(true);
-        red.setToolTipText("Adjust the red levels of the image");
-        window.add(red);
-
-        //green
-        green = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
-        green.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        green.setBounds(10, 80, 255, 50);
-        green.setMajorTickSpacing(10);
-        green.setMinorTickSpacing(5);
-        green.setPaintTicks(true);
-        green.setToolTipText("Adjust the green levels of the image");
-        window.add(green);
-
-        //Blue
-        blue = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
-        blue.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        blue.setBounds(10, 150, 255, 50);
-        blue.setMajorTickSpacing(10);
-        blue.setMinorTickSpacing(5);
-        blue.setPaintTicks(true);
-        blue.setToolTipText("Adjust the blue levels of the image");
-        window.add(blue);
-
-        //Exposure
-        exp = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
-        exp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        exp.setBounds(10, 220, 255, 50);
-        exp.setMajorTickSpacing(10);
-        exp.setMinorTickSpacing(5);
-        exp.setPaintTicks(true);
-        exp.setToolTipText("Adjust the exposure of the image");
-        window.add(exp);
-    }
-
-    //Attaches events to the sliders
-    private void eventAdder() {
-        event e = new event();
-        exp.addChangeListener(e);
-        red.addChangeListener(e);
-        green.addChangeListener(e);
-        blue.addChangeListener(e);
-    }
-
-    //Updates levels Labels
-    public class event implements ChangeListener {
-
-        public void stateChanged(ChangeEvent e) {
-            int exposure = exp.getValue();
-            int redlevel = red.getValue();
-            int bluelevel = blue.getValue();
-            int greenlevel = green.getValue();
-
-            lgreen.setText("Green: " + greenlevel);
-            lblue.setText("Blue: " + bluelevel);
-            lred.setText("Red: " + redlevel);
-            lexp.setText("Exposure: " + exposure);
-        }
     }
 
     public File filename() {

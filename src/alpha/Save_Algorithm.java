@@ -51,7 +51,7 @@ public class Save_Algorithm {
     }
 
     //Create Project File
-    public void projectFile(String key, int value) {
+    public void projectFile(String key, int value, long canonprop) {
         try {
             File file = new File(path);
             boolean exist = file.exists();
@@ -60,6 +60,7 @@ public class Save_Algorithm {
             }
             OutputStream write = new FileOutputStream(path);
             prop.setProperty(key, Integer.toString(value));
+            prop.setProperty(key, Long.toString(canonprop));
             prop.storeToXML(write, "Project Specific Settings");
         } catch (RuntimeException e) {
             throw e;
