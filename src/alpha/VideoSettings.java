@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 /**
@@ -21,13 +22,16 @@ import javax.swing.UIManager;
 //Not Functional Yet
 public class VideoSettings extends JFrame {
 
-    private JLabel lfps;
+    private JLabel lfps, vidw, vidh, vidf;
     private JButton ok;
     JPanel settings = new JPanel();
     private int width = 640;
     private int height = 480;
     private Choice fps = new Choice();
-    private Rectangle rok, rfps;
+    private JTextField videowidth = new JTextField("1280");
+    private JTextField videoheight = new JTextField("720");
+    private Choice videoformat = new Choice();
+    private Rectangle rok;
 
     public VideoSettings() {
         try {
@@ -56,6 +60,18 @@ public class VideoSettings extends JFrame {
         lfps = new JLabel("FPS");
         lfps.setBounds(30, 10, 80, 25);
         settings.add(lfps);
+
+        vidw = new JLabel("Video Width");
+        vidw.setBounds(120, 10, 80, 25);
+        settings.add(vidw);
+
+        vidh = new JLabel("Video Height");
+        vidh.setBounds(200, 10, 80, 25);
+        settings.add(vidh);
+
+        vidf = new JLabel("Video Format");
+        vidf.setBounds(290, 10, 80, 25);
+        settings.add(vidf);
     }
 
     private void drawbuttons() {
@@ -65,8 +81,7 @@ public class VideoSettings extends JFrame {
         ok.setBounds(rok);
         settings.add(ok);
 
-        rfps = new Rectangle(30, 40, 80, 25);
-        fps.setBounds(rfps);
+        fps.setBounds(30, 40, 80, 25);
         fps.add("10");
         fps.add("12");
         fps.add("15");
@@ -75,10 +90,39 @@ public class VideoSettings extends JFrame {
         fps.select(2);
         settings.add(fps);
 
+        videowidth.setBounds(120, 40, 70, 20);
+        settings.add(videowidth);
+
+        videoheight.setBounds(200, 40, 70, 20);
+        settings.add(videoheight);
+
+        videoformat.setBounds(290, 40, 80, 25);
+        videoformat.add("avi");
+        videoformat.add("wmv");
+        videoformat.add("mov");
+        videoformat.select(1);
+        settings.add(videoformat);
+
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
+                int width = Integer.parseInt(videowidth.getText());
+                int height = Integer.parseInt(videoheight.getText());
+                int format = videoformat.getSelectedIndex();
                 int fpsselection = fps.getSelectedIndex();
                 int f = 0;
+                String formatstring = ".wmv";
+
+                if (format == 0) {
+                    formatstring = ".avi";
+                }
+
+                if (format == 1 || format == -1) {
+                    formatstring = ".wmv";
+                }
+
+                if (format == 2) {
+                    formatstring = ".mov";
+                }
 
                 if (fpsselection == 0) {
                     f = 10;
@@ -100,7 +144,10 @@ public class VideoSettings extends JFrame {
                     f = 30;
                 }
 
-                Configure.saveConfig("fps", f);
+                Configure.saveConfigStrings("Video file Format", formatstring);
+                Configure.saveConfigInts("fps", f);
+                Configure.saveConfigInts("Width", width);
+                Configure.saveConfigInts("Height", height);
                 dispose();
             }
         });

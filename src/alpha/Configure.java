@@ -23,7 +23,23 @@ public class Configure {
     static String path = "settings/config.xml";
     VideoWriter vw = new VideoWriter();
 
-    public static void saveConfig(String key, int value) {
+    public static void saveConfigStrings(String key, String string) {
+        try {
+            File file = new File(path);
+            boolean exist = file.exists();
+            if (!exist) {
+                file.createNewFile();
+            }
+            OutputStream write = new FileOutputStream(path);
+            prop.setProperty(key, string);
+            prop.storeToXML(write, "Frames per Second");
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+        }
+    }
+
+    public static void saveConfigInts(String key, int value) {
         try {
             File file = new File(path);
             boolean exist = file.exists();
@@ -39,18 +55,42 @@ public class Configure {
         }
     }
 
-    //Loads the XML when you start each time
+    //Loads the XML when you export each time
     protected static void loadConfig(String path) {
         try {
             InputStream read = new FileInputStream(path);
             prop.loadFromXML(read);
             String fps = prop.getProperty("fps");
+            String width = prop.getProperty("Width");
+            String height = prop.getProperty("Height");
+            String format = prop.getProperty("Video file Format");
             System.out.println("Frame rate selected = " + fps);
+            System.out.println("Width: " + width);
+            System.out.println("Height: " + height);
+            System.out.println("File Format: " + format);
+            setFormat(format);
+            setWidth(Integer.parseInt(width));
+            setHeight(Integer.parseInt(height));
             setFPS(Float.parseFloat(fps));
             read.close();
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
+    }
+
+    protected static String setFormat(String f) {
+        VideoWriter.videoFormat = f;
+        return f;
+    }
+
+    protected static int setWidth(int w) {
+        VideoWriter.videoWidth = w;
+        return w;
+    }
+
+    protected static int setHeight(int h) {
+        VideoWriter.videoHeight = h;
+        return h;
     }
 
     protected static void setFPS(float FPS) {
