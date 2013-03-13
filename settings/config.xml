@@ -2,8 +2,8 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>Frames per Second</comment>
-<entry key="Width">1920</entry>
-<entry key="Video file Format">.mov</entry>
+<entry key="Width">1280</entry>
+<entry key="Video file Format">.wmv</entry>
 <entry key="fps">15</entry>
-<entry key="Height">1080</entry>
+<entry key="Height">720</entry>
 </properties>

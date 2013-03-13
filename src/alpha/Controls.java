@@ -69,7 +69,7 @@ public class Controls {
     protected static int framename = 0;
     public static CanonCamera camera = new CanonCamera();
     private audioRecorder audio = new audioRecorder();
-    ImageIcon[] images = new ImageIcon[10000];
+    ImageIcon images = new ImageIcon();
     static boolean canon = true;
     static boolean nikon = true;
     static boolean webcam = true;
@@ -337,10 +337,10 @@ public class Controls {
                     renderCanon.setIcon(null);
                 } else if (webcam == true) {
                     for (int i = 0; i < framename; i++) {
-                        images[i] = new ImageIcon(Save_Algorithm.imgdir + "\\image_" + i + ".tiff");
-                        renderWebcam.setIcon(null);
-                        renderWebcam.setIcon(images[i]);
-                        renderWebcam.revalidate();
+                        images = new ImageIcon(Save_Algorithm.imgdir + "\\image_" + i + ".tiff");
+//                        renderWebcam.setIcon(null);
+//                        renderWebcam.setIcon(images);
+//                        renderWebcam.revalidate();
                         System.out.println(images);
                     }
                 }

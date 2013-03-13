@@ -59,7 +59,7 @@ public class Toolbar {
     JMenuItem about = new JMenuItem("About...");
     JMenuItem mshelp = new JMenuItem("Help");
     //cascades
-    JMenuItem scenecas = new JMenuItem("Scene 1");
+    JMenuItem s = new JMenuItem("Scene 1");
     JMenuItem canonControls = new JMenuItem("Canon Controller");
     JMenuItem nikonControls = new JMenuItem("Nikon Controller");
     JMenuItem webcamControls = new JMenuItem("Webcam Controller");
@@ -69,7 +69,7 @@ public class Toolbar {
         cam.add(canonControls);
         cam.add(nikonControls);
         cam.add(webcamControls);
-        swscene.add(scenecas);
+        swscene.add(s);
         toolBar.add(createMoreButton());
         toolBar.add(createPrograms());
         toolBar.add(createSettings());
@@ -82,6 +82,12 @@ public class Toolbar {
     private void addMenuItem() {
         JMenuItem s = new JMenuItem("Scene " + Save_Algorithm.scenenum);
         swscene.add(s);
+
+        s.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionevent) {
+                
+            }
+        });
     }
 
     //Settings menu
@@ -245,14 +251,8 @@ public class Toolbar {
     //Actions performed when clicked
     private void actionMethod() {
 
-        swscene.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actev) {
-                //addd TODO code
-            }
-        });
-
         canonControls.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionevent){
+            public void actionPerformed(ActionEvent actionevent) {
                 new Canon();
             }
         });

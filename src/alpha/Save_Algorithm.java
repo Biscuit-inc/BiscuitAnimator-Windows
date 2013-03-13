@@ -61,6 +61,7 @@ public class Save_Algorithm {
             OutputStream write = new FileOutputStream(path);
             prop.setProperty(key, Integer.toString(value));
             prop.setProperty(key, Long.toString(canonprop));
+            prop.setProperty("Path", Integer.toString(1));
             prop.storeToXML(write, "Project Specific Settings");
         } catch (RuntimeException e) {
             throw e;
