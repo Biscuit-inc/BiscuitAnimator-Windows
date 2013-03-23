@@ -35,7 +35,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
@@ -47,8 +46,6 @@ public class Controls {
 
     //Variables
     private TextArea scriptfield = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
-    private JSlider exp, red, green, blue;
-    long canonbatterylg = camera.getProperty(kEdsPropID_BatteryLevel);
     private static Frame frame = new Frame();
     protected static JPanel window = new JPanel();
     private JPanel script = new JPanel();
@@ -76,7 +73,6 @@ public class Controls {
     public static void main(String args[]) throws InterruptedException {
         camera.openSession();
         camera.beginLiveView();
-        //Canon.Constants();
         new Controls();
         new Save_as();
 

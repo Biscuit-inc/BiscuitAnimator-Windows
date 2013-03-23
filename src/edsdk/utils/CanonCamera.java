@@ -52,8 +52,7 @@ public class CanonCamera implements EdsObjectEventHandler {
         options.put(Library.OPTION_CALLING_CONVENTION, StdCallLibrary.STDCALL_CONVENTION);
     }
     // This gives you direct access to the EDSDK
-    public static EdSdkLibrary EDSDK =
-            (EdSdkLibrary) Native.loadLibrary("EDSDK/dll/EDSDK.dll", EdSdkLibrary.class, options);
+    public static EdSdkLibrary EDSDK = (EdSdkLibrary) Native.loadLibrary("EDSDK/dll/EDSDK.dll", EdSdkLibrary.class, options);
     // Libraries needed to forward windows messages
     private static final User32 lib = User32.INSTANCE;
     //private static final HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle("");
